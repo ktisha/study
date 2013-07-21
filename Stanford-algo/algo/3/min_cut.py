@@ -1,12 +1,13 @@
 __author__ = 'catherine'
 
 from random import randint
+import numpy as np
 
 def get_data(name):
   my_file = file(name)
   data = {}
 
-  for i in xrange(1, 41):
+  for i in xrange(1, 201):
     data[str(i)] = []
 
   for line in my_file.readlines():
@@ -71,7 +72,7 @@ if __name__ == "__main__":
   import sys
   minimum_cut = sys.maxint
 
-  for i in xrange(64000):
+  for i in xrange(40000):
     data = get_data("data")
     min = min_cut(data)
     if min < minimum_cut:
