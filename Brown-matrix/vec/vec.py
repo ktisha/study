@@ -1,10 +1,12 @@
-def getitem(v,d):
-    """Returns the value of entry d in v
+def keys(u,v):
+    s = set(u.f.keys())
+    s.update(v.f.keys())
+    return s
 
-    :type v: Vec
-    """
+def getitem(v,d):
+    "Returns the value of entry d in v"
     assert d in v.D
-    return v.f[d] if d in v.f else 0
+    return v.f.get(d,0)
 
 def setitem(v,d,val):
     "Set the element of v with label d to be val"
@@ -14,50 +16,31 @@ def setitem(v,d,val):
 def equal(u,v):
     "Returns true iff u is equal to v"
     assert u.D == v.D
-
-    def is_sub_set(u, v):
-        for x in u.f:
-            if x not in v.f and u.f[x] != 0:
-                return False
-            elif x in v.f and u.f[x] != v.f[x]:
-                return False
-        return True
-
-    return is_sub_set(u, v) and is_sub_set(v, u)
+    for k in keys(u, v):
+        if u[k] != v[k]:
+            return False
+    return True
 
 def add(u,v):
     "Returns the sum of the two vectors"
     assert u.D == v.D
-    s = v.copy()
-    for x in u.f:
-        if x not in s.f:
-            s.f[x] = u.f[x]
-        else:
-            s.f[x] = s.f[x] + u.f[x]
-    return s
+    f = {}
+    for k in keys(u,v):
+        f[k] = u[k] + v[k]
+    return Vec(u.D, f)
 
 def dot(u,v):
     "Returns the dot product of the two vectors"
     assert u.D == v.D
-    my_sum = 0
-    for x in u.f:
-        if x in v.f:
-            my_sum += u.f[x] * v.f[x]
-    return my_sum
+    return sum((u[k]*v[k] for k in keys(u,v)))
 
 def scalar_mul(v, alpha):
     "Returns the scalar-vector product alpha times v"
-    u = v.copy()
-    for x in u.f:
-        u.f[x] = alpha * u.f[x]
-    return u
+    return Vec(v.D, {k:alpha*v[k] for k in v.f.keys()})
 
 def neg(v):
     "Returns the negation of a vector"
-    u = v.copy()
-    for x in u.f:
-        u.f[x] *= -1
-    return u
+    return -1*v
 
 ##### NO NEED TO MODIFY BELOW HERE #####
 class Vec:
