@@ -1,5 +1,5 @@
 __author__ = 'catherine'
-length = 9
+length = 875714
 
 class Vertex:
     def __init__(self):
@@ -74,12 +74,14 @@ def dfs(graph, vertex):
     t += 1
     vertex.time = t
 
-if __name__ == "__main__":
+
+
+def main():
     global s
     global t
     s = None
     t = 0
-    data = get_data("data1.txt")
+    data = get_data("data.txt")
 
     revert_graph(data)
 
@@ -102,3 +104,10 @@ if __name__ == "__main__":
         leaders[data.index(v.leader)] +=1
 
     print leaders
+
+if __name__ == "__main__":
+    import threading, sys
+    threading.stack_size(67108864) # 64MB stack
+    sys.setrecursionlimit(2 ** 20)  # approx 1 million recursions
+    thread = threading.Thread(target = main) # instantiate thread object
+    thread.start() # run program at target
