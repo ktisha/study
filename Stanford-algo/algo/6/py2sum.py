@@ -17,7 +17,7 @@ if __name__ == "__main__":
             data.add(int(line))
 
     print "START"
-    for i in xrange(-10000, 100001):
+    for i in xrange(-10000, 10001):
         if find2sum(i):
             counter += 1
 
